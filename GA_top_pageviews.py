@@ -2,14 +2,6 @@
 
 import re
 
-filename = input("Please provide the path to the Google Analytics file:")
-filewrite = input("Please provide the path to the write-to file:")
-
-def top_20(filename):
-    text = file_to_string(filename)
-    tup = catch_data(text)
-    write_file(filewrite) 
-
 #Open file and read it as a string.
 
 def file_to_string(filename):
@@ -42,3 +34,11 @@ def write_file(filewrite):
     for art in new_articles:
         file.write(art[0] + ',' + ' ' + art[1] + '\n\n')
     file.close()
+
+
+if __name__ == "__main__":
+    filename = input("Please provide the path to the Google Analytics file:")
+    filewrite = input("Please provide the path to the write-to file:")
+    text = file_to_string(filename)
+    tup = catch_data(text)
+    write_file(filewrite) 
