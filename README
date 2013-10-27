@@ -1,11 +1,1 @@
-This program takes Google Analytics Pages report file and returns the selected number of articles with the most pageviews in another file that the user specifies.
-
-It is intended for separating the most viewed article pages from section pages in GA reports of a certain news website, since section pages are usually at the top of the report.
-
-So it might be useful to editors and journalists to a certain extent, but it will probably demand some modification on their part.
-
-!!!IMPORTANT - The original file must be in .csv format and must be exported from the Pages section.
-
-The number of rows the original file must have depends on the number of articles the user wishes to have in the cleansed report. In general; the higher, the better.
-
-Recommended format for target files are .txt and .csv 
+Forked version of GA_top_pageviews to match certain website prerequisites.
