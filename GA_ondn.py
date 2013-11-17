@@ -59,7 +59,7 @@ def write_file(filewrite, n):
 if __name__ == "__main__":
     filename = input("Please provide the path to the Google Analytics file (without the quotes):")
     filewrite = input("Please provide the path to the write-to file (without the quotes):")
-    n = input("The number of the articles with the most pageviews you would like to have in the new report:")
+    n = input("Please select the number of articles with the most pageviews you would like to have in the new report:")
     text = file_to_string(filename)
     old_tup = catch_data(text)
     tup = clear_subcat(old_tup)
