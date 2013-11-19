@@ -1,6 +1,7 @@
 from GA_ondn import catch_data, file_to_string, clear_subcat
 import urllib.request
 import re
+import html.parser
 
 
 def get_article_list(filename):
@@ -45,7 +46,9 @@ def get_titles(filename):
     ''' (str) -> list of str
     Returns the list of webpage titles from the urls in the csv file.
     '''
+    h = html.parser.HTMLParser()
     titles = [get_title(x) for x in urls]
+    titles = [h.unescape(x) for x in titles]
     return titles
 
 

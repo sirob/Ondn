@@ -21,7 +21,7 @@ def catch_data(text):
     report_date = re.search('\w+-\w+', text)
     title = site_name.group()
     date_range = report_date.group()
-    articles = re.findall('(/\w+/\D+),"(\w+,\w+)"', text)
+    articles = re.findall('(/\D+/[^,]+),"(\w+,\w+)"', text)
     return title, date_range, articles
 
 
@@ -32,7 +32,7 @@ def clear_subcat(old_tup):
     date_range = old_tup[1]
     articles = old_tup[2]
     clear_articles = [x for x in articles if x[0] not in ('/slovenija/v-ospredju', '/sport/nogomet',
-                                                          '/poslovni/novice', '/sport/hokej-na-ledu') and '/tag/' not in x[0]]
+                                                          '/poslovni/novice', '/sport/hokej-na-ledu,') and '/tag/' not in x[0]]
     return title, date_range, clear_articles
 
     
