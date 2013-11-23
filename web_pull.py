@@ -47,10 +47,9 @@ def get_titles(filename):
     Returns the list of webpage titles from the urls in the csv file.
     '''
     h = html.parser.HTMLParser()
-    titles = [get_title(x) for x in urls]
-    titles = [h.unescape(x) for x in titles]
+    titles_non = [get_title(x) for x in get_urls(filename)]
+    titles = [h.unescape(x) for x in titles_non]
     return titles
-
 
     
 if __name__ == "__main__":
