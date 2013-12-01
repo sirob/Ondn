@@ -4,10 +4,15 @@ from email.mime.text import MIMEText
 from email.header import Header
 from web_pull import *
 from datetime import datetime
+import sys
 
 
 if __name__ == "__main__":
-    filename = input("Please, provide the path to the file:")
+    if len(sys.argv) < 2:
+        print('Please provide the input file.')
+        sys.exit()
+
+    filename = sys.argv[1]
     text = file_to_string(filename)
     tup = catch_data(text)
     date_range = tup[1]
@@ -16,61 +21,35 @@ if __name__ == "__main__":
     date_end = datetime.strptime(range_end, '%Y%m%d')
     
     urls = get_urls(filename)
-    titles = get_titles(filename)
-    pageviews = get_pageviews(filename)
+    articles = get_article_list(filename)
+    titles = get_titles(articles)
+    pageviews = get_pageviews(articles)
 
-    fromaddr = 'xxxxxx@gmail.com'
-    toaddr = 'some@email.com'
+    fromaddr = 'xxxxx@gmail.com'        #Replace with your gmail account.
+    toaddr = 'some@email.com'           #Replace with the address you want to send to.
     msg = MIMEMultipart('alternative')
 
     msg['To'] = toaddr
     msg['From'] = fromaddr
     msg['Subject'] = Header('Najbolj brani članki preteklega tedna', 'utf-8')
 
-    html = """\
+    html = """
     <html>
       <head></head>
       <body>
-        <p>Od: %s Do: %s</p>
-        <h1> 1. %s <a href="%s">-klik-</a> %s ogledov</h1></br></br>
-        <h1> 2. %s <a href="%s">-klik-</a> %s ogledov</h1></br></br>
-        <h1> 3. %s <a href="%s">-klik-</a> %s ogledov</h1></br></br>
-        <h1> 4. %s <a href="%s">-klik-</a> %s ogledov</h1></br></br>
-        <h1> 5. %s <a href="%s">-klik-</a> %s ogledov</h1></br></br>
-        <h1> 6. %s <a href="%s">-klik-</a> %s ogledov</h1></br></br>
-        <h1> 7. %s <a href="%s">-klik-</a> %s ogledov</h1></br></br>
-        <h1> 8. %s <a href="%s">-klik-</a> %s ogledov</h1></br></br>
-        <h1> 9. %s <a href="%s">-klik-</a> %s ogledov</h1></br></br>
-        <h1>10. %s <a href="%s">-klik-</a> %s ogledov</h1></br></br>
-        <h1>11. %s <a href="%s">-klik-</a> %s ogledov</h1></br></br>
-        <h1>12. %s <a href="%s">-klik-</a> %s ogledov</h1></br></br>
-        <h1>13. %s <a href="%s">-klik-</a> %s ogledov</h1></br></br>
-        <h1>14. %s <a href="%s">-klik-</a> %s ogledov</h1></br></br>
-        <h1>15. %s <a href="%s">-klik-</a> %s ogledov</h1></br></br>
-        <h1>16. %s <a href="%s">-klik-</a> %s ogledov</h1></br></br>
-        <h1>17. %s <a href="%s">-klik-</a> %s ogledov</h1></br></br>
-        <h1>18. %s <a href="%s">-klik-</a> %s ogledov</h1></br></br>
-        <h1>19. %s <a href="%s">-klik-</a> %s ogledov</h1></br></br>
-        <h1>20. %s <a href="%s">-klik-</a> %s ogledov</h1></br></br>
-      </body>
-    </html>
-    """ %(str(date_start), str(date_end), titles[0], urls[0], pageviews[0], titles[1], urls[1], pageviews[1],
-          titles[2], urls[2], pageviews[2], titles[3], urls[3], pageviews[3],
-          titles[4], urls[4], pageviews[4], titles[5], urls[5], pageviews[5],
-          titles[6], urls[6], pageviews[6], titles[7], urls[7], pageviews[7],
-          titles[8], urls[8], pageviews[8], titles[9], urls[9], pageviews[9],
-          titles[10], urls[10], pageviews[10], titles[11], urls[11], pageviews[11],
-          titles[12], urls[12], pageviews[12], titles[13], urls[13], pageviews[13],
-          titles[14], urls[14], pageviews[14], titles[15], urls[15], pageviews[15],
-          titles[16], urls[16], pageviews[16], titles[17], urls[17], pageviews[17],
-          titles[18], urls[18], pageviews[18], titles[19], urls[19], pageviews[19])
+        <p>Od: %s Do: %s</p>""" % (str(date_start), str(date_end))
+
+    for i in range(0,20):
+        html += '<h1> %s. %s <a href="%s">-klik-</a> %s ogledov</h1></br></br>\n' % (i+1, titles[i], urls[i], pageviews[i])
+        
+
 
 
     msg.attach(MIMEText(html.encode('utf-8'), 'html', 'utf-8'))
 
 
-    username = 'xxxxx@gmail.com'
-    password = ' xxxxxxxxxx'
+    username = 'xxxxxx@gmail.com'    #Replace with your gmail account.
+    password = 'xxxxxxxx'       #Replace with application password: https://support.google.com/accounts/answer/185833
     server = smtplib.SMTP('smtp.gmail.com:587')
     server.ehlo()
     server.starttls()
