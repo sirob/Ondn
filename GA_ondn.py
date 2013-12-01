@@ -61,7 +61,7 @@ def write_file(title, date_range, articles, filewrite, n):
 
 if __name__ == "__main__":
     if len(sys.argv) < 4:
-        print ("Please provide input file, output file and the number of articles you want to have in your output file. %s") % len(sys.argv)
+        print ("Please provide input file, output file and the number of articles you want to have in your output file.")
         sys.exit(0)
 
     # filename = input("Please provide the path to the Google Analytics file (without the quotes):")
